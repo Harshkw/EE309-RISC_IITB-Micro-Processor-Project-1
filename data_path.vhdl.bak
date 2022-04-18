@@ -1,0 +1,29 @@
+library ieee;
+use ieee.numeric_std.all;
+use ieee.std_logic_1164.all;
+use ieee.math_real.all;
+
+library work;
+use work.components.all;
+use work.alu.all;
+use work.signextender.all;
+
+entity data_path is
+	port(
+	op_code: out std_logic_vector(3 downto 0);
+	CZ: out std_logic_vector(1 downto 0);
+	clock, reset: in std_logic;
+	C: in std_logic_vector(26 downto 0);
+	state: out std_logic_vector(5 downto 0);
+	P0: out std_logic_vector(15 downto 0));
+end entity;
+
+architecture struct of data_path is
+
+	component sign_extend is
+		generic(input_width: integer := 6;
+			output_width: integer := 16);
+		port(
+			input: in std_logic_vector(input_width-1 downto 0);
+			output: out std_logic_vector(output_width-1 downto 0));
+	end component;
